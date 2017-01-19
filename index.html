@@ -318,10 +318,38 @@ input:not(:valid) + .input::after {
     </style>
   </head>
   <body>
+    <div class="js">
+      <form method="GET" action="./" target="_self">
+        <div class="field">
+          <label>
+            <input type="number" aria-labelledby="_false" min="1" max="100" step="1" required name="limit">
+            <div class="input" id="_limit">Limit
+            </div>
+          </label>
+        </div>
+        <div class="field">
+          <label>
+            <input type="name" aria-labelledby="_false" required name="user">
+            <div class="input" id="_user">Username
+            </div>
+          </label>
+        </div>
+        <div class="field">
+          <label>
+            <input type="text" aria-labelledby="_false" required name="sr">
+            <div class="input" id="_sr">Subreddit
+            </div>
+          </label>
+        </div>
+        <input type="submit">
+      </form>
+    </div>
     <h1 id="title">Is <a href="https://www.reddit.com/u/GallowBoob">/u/GallowBoob</a> on the front page of reddit?</h1>
     <div class="no-js">
       <p>You do not appear to have scripting enabled.</p>
       <p>Sadly, static pages will fail without scripting.</p>
+      <p>All of the <a href="./src/index.babel">ES6/Babel javascript</a> is <abbr title="Free, Open Source Script">FOSS</abbr>, however the <abbr title="Application Programming Interface">API</abbr> of <a href="https://www.reddit.com">reddit.com</a> may contain closed source software and/or links through to that.</p>
+      <p>reddit has its source code available through <a href="https://github.com/reddit/reddit">reddit / reddit</a> or <a href="https://code.reddit.com">code.reddit.com</a>.</p>
     </div>
     <div class="js">
       <h2 id="answer">Checking…</h2>
@@ -329,30 +357,6 @@ input:not(:valid) + .input::after {
       <h2 id="allusers"></h2>
       <dl id="users"></dl>
     </div>
-    <form method="GET" action="./" target="_self">
-      <div class="field">
-        <label>
-          <input type="number" aria-labelledby="_false" min="1" max="100" step="1" required name="limit">
-          <div class="input" id="_limit">Limit
-          </div>
-        </label>
-      </div>
-      <div class="field">
-        <label>
-          <input type="name" aria-labelledby="_false" required name="user">
-          <div class="input" id="_user">Username
-          </div>
-        </label>
-      </div>
-      <div class="field">
-        <label>
-          <input type="text" aria-labelledby="_false" required name="sr">
-          <div class="input" id="_sr">Subreddit
-          </div>
-        </label>
-      </div>
-      <input type="submit">
-    </form>
     <script>'use strict';
 
 var Options;

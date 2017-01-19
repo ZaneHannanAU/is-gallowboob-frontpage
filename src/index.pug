@@ -16,16 +16,19 @@ html(
 			href='https://www.reddit.com/r/all/.json?limit=50'
 			)
 	body
+		.js
+			include form
 		h1#title Is #[a(href='https://www.reddit.com/u/GallowBoob') /u/GallowBoob] on the front page of reddit?
 		.no-js
 			p You do not appear to have scripting enabled.
 			p Sadly, static pages will fail without scripting.
+			p All of the #[a(href='./src/index.babel') ES6/Babel javascript] is #[abbr(title='Free, Open Source Script') FOSS], however the #[abbr(title='Application Programming Interface') API] of #[a(href='https://www.reddit.com')='reddit.com'] may contain closed source software and/or links through to that.
+			p reddit has its source code available through #[a(href='https://github.com/reddit/reddit') reddit / reddit] or #[a(href='https://code.reddit.com')='code.reddit.com'].
 		.js
 			h2#answer='Checking\u2026'
 			dl#posts
 			h2#allusers
 			dl#users
-		include form
 		script: include index.js
 		footer
 			p Fork me on GitHub: #[a(href='//github.com/ZaneHannanAU/is-gallowboob-frontpage')='Zane\xADHannan\xADAU / Is Gallow\xADBoob Front\xADpage?']
