@@ -33,7 +33,7 @@ var addUser = (post, i) => {
 	div.dataset.rank = ++i
 
 	a.href = `/u/${post.data.author}`
-	a.innerText = `u/${post.data.author}`
+	a.innerText = `/u/${post.data.author}`
 	dt.appendChild(a)
 	div.appendChild(dt)
 

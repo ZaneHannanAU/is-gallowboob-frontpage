@@ -1,6 +1,6 @@
 # build output
-src/*.css
-src/*.js
+*.css
+*.js
 # Logs
 logs
 *.log

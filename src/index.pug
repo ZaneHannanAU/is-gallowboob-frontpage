@@ -3,7 +3,7 @@ html
 	head
 		meta(charset='UTF-8')
 		title Is GallowBoob on the front page of reddit?
-		base(href='https://www.reddit.com/')
+		base(href='https://www.reddit.com/' target='_blank')
 		script document.documentElement.classList.add('js')
 		style: include index.css
 		//- link(
@@ -16,7 +16,7 @@ html
 			p You do not appear to have scripting enabled.
 			p Sadly, static pages will fail without scripting.
 		.js
-			#answer='Checking\u2026'
+			h2#answer='Checking\u2026'
 			dl#posts
 			h2#allusers
 			dl#users
