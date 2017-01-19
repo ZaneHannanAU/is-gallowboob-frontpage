@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <title>Is /u/GallowBoob on the front page of reddit?</title>
     <base target="_blank">
     <script>document.documentElement.classList.add('js')</script>
@@ -361,7 +362,7 @@ input:not(:valid) + .input::after {
 
 var Options;
 if (location.search.indexOf('?') === 0) {
-	var points = location.search.slice(1).split('&');
+	var points = decodeURIComponent(location.search.slice(1)).split('&');
 	points.forEach(function (s, i) {
 		points[i] = s.split('=');
 		points[i][0] = points[i][0].toLocaleLowerCase();
