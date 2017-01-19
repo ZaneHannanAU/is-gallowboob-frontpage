@@ -323,21 +323,21 @@ input:not(:valid) + .input::after {
       <form method="GET" action="./" target="_self">
         <div class="field">
           <label>
-            <input type="number" aria-labelledby="_false" min="1" max="100" step="1" required name="limit">
+            <input type="number" aria-labelledby="_limit" min="1" max="100" step="1" required id="limit" name="limit">
             <div class="input" id="_limit">Limit
             </div>
           </label>
         </div>
         <div class="field">
           <label>
-            <input type="name" aria-labelledby="_false" required name="user">
+            <input type="name" aria-labelledby="_user" required id="user" name="user">
             <div class="input" id="_user">Username
             </div>
           </label>
         </div>
         <div class="field">
           <label>
-            <input type="text" aria-labelledby="_false" required name="sr">
+            <input type="text" aria-labelledby="_sr" required id="sr" name="sr">
             <div class="input" id="_sr">Subreddit
             </div>
           </label>
@@ -410,9 +410,9 @@ var posts = qs('#posts'),
 title.innerHTML = 'Is <a href="https://www.reddit.com/u/' + user + '">/u/' + user + '</a> on the front page of ' + (sr === 'all' ? 'reddit' : '<a href="https://www.reddit.com/r/' + sr + '">r/' + sr + '</a>') + '?';
 document.title = title.innerText;
 
-qs('form input[name="limit"]').value = limit;
-qs('form input[name="user"]').value = user;
-qs('form input[name="sr"]').value = sr;
+qs('#limit').value = limit;
+qs('#user').value = user;
+qs('#sr').value = sr;
 
 var addPost = function addPost(post, i, array, father) {
 	un = cn(Ea); // username

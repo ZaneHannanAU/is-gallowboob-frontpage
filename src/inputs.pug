@@ -17,7 +17,6 @@ mixin input(vals)
 			vals.attrs = attributes
 			let iid = attributes.id
 			vals.attrs.name = iid
-			vals.attrs.id = false
 		case vals.type
 			default: +form__field
 					+input__default(vals)

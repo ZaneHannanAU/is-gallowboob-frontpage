@@ -33,9 +33,9 @@ var posts = qs('#posts'),
 title.innerHTML = `Is <a href="https://www.reddit.com/u/${user}">/u/${user}</a> on the front page of ${sr === 'all' ? 'reddit' : `<a href="https://www.reddit.com/r/${sr}">r/${sr}</a>`}?`
 document.title = title.innerText
 
-qs('form input[name="limit"]').value = limit
-qs('form input[name="user"]').value = user
-qs('form input[name="sr"]').value = sr
+qs('#limit').value = limit
+qs('#user').value = user
+qs('#sr').value = sr
 
 
 var addPost = (post, i, array, father) => {
