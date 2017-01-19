@@ -29,3 +29,13 @@ if length(accent-colour) > 1
 
 :root
 	optionColour(background-colour)
+
+input
+textarea
+	@extend :root
+
+form
+	display flex
+	flex-flow row wrap
+	.field
+		flex 1 1 20rem

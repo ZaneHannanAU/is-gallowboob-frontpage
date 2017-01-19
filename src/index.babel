@@ -13,6 +13,7 @@ if (location.search.indexOf('?') === 0) {
 const qs = q => document.querySelector(q)
 const qsa = qa => document.querySelectorAll(qa)
 const ce = el => document.createElement(el)
+const cn = nd => nd.cloneNode(true)
 
 var posts = qs('#posts'),
 	allusers = qs('#allusers'),
@@ -27,32 +28,36 @@ var posts = qs('#posts'),
 	Ediv = ce('div'),
 	Edt = ce('dt'),
 	Edd = ce('dd'),
-	a, li, div, dt, dd, loggable = [], allUsers = []
+	un, pt, li, div, dt, dd, loggable = [], allUsers = []
 
-title.innerHTML = `Is <a href="/u/${user}">/u/${user}</a> on the front page of ${sr === 'all' ? 'reddit' : `<a href="/r/${sr}">r/${sr}</a>`}?`
+title.innerHTML = `Is <a href="https://www.reddit.com/u/${user}">/u/${user}</a> on the front page of ${sr === 'all' ? 'reddit' : `<a href="https://www.reddit.com/r/${sr}">r/${sr}</a>`}?`
 document.title = title.innerText
+
+qs('form input[name="limit"]').value = limit
+qs('form input[name="user"]').value = user
+qs('form input[name="sr"]').value = sr
 
 
 var addPost = (post, i, array, father) => {
-		a = Ea.cloneNode(true)
-		dt = Edt.cloneNode(true)
-		dd = Edd.cloneNode(true)
-		div = Ediv.cloneNode(true)
+		un = cn(Ea) // username
+		pt = cn(Ea) // post title
+		dt = cn(Edt) // desc
+		dd = cn(Edd) // desc
+		div = cn(Ediv) // contain
 
 		div.dataset.score = post.data.score
 		div.dataset.rank = 1+i
 		div.dataset.sr = post.data.subreddit
 
-		a.href = `/u/${post.data.author}`
-		a.innerText = `/u/${post.data.author}`
-		dt.appendChild(a)
+		un.href = `https://www.reddit.com/u/${post.data.author}`
+		un.innerText = `/u/${post.data.author}`
+		dt.appendChild(un)
 		div.appendChild(dt)
 
-		a = Ea.cloneNode(true)
-		a.href = post.data.permalink
-		a.innerHTML = post.data.title
-		dd.value = post.data.score
-		dd.appendChild(a)
+		pt.href = `https://www.reddit.com${post.data.permalink}`
+		pt.innerHTML = post.data.title
+
+		dd.appendChild(pt)
 		div.appendChild(dd)
 		return father.appendChild(div)
 	}
@@ -70,5 +75,5 @@ fetch(`https://www.reddit.com/r/${sr}/.json?limit=${limit}`)
 		answer.innerText = isFront ? 'Yes:' : 'No.'
 		console.log(loggable)
 		loggable.forEach((post, i, posts) => addPost(post, i, posts, users))
-		allusers.innerHTML = `The top ${loggable.length} users on <a href="/r/${sr}">r/${sr}</a> in default sort:`
+		allusers.innerHTML = `The top ${loggable.length} users on <a href="https://www.reddit.com/r/${sr}">r/${sr}</a> in default sort:`
 	})

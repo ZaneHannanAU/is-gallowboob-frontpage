@@ -3,8 +3,17 @@
 primary-colour = 'Blue Grey' '800'
 background-colour = 'Blue Grey' '900'
 accent-colour = 'Deep Orange' 'A200'
+text-direction = ltr
+Buttons = {
+	Submit: 'Light Blue' 'A700'
+}
+
+start = (text-direction == 'ltr') ? left : right
+end = (text-direction == 'ltr') ? right : left
 
 @import 'mixins'
+$primary-text-color-dark = dark($primary-text-color)
+
 @require 'stylus-material'
 
 sm-init(
@@ -34,7 +43,7 @@ body
 		flex 1 1 auto
 		justify-content center
 
-:empty
+:empty:not(input)
 	display none
 
 h1
@@ -71,3 +80,6 @@ dl
 a
 	text-decoration none
 	color $accent-color
+
+
+@import 'input'

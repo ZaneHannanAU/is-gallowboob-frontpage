@@ -1,4 +1,6 @@
 doctype html
+include inputs
+
 html(
 	lang='en'
 	dir='ltr'
@@ -6,7 +8,7 @@ html(
 	head
 		meta(charset='UTF-8')
 		title Is /u/GallowBoob on the front page of reddit?
-		base(href='https://www.reddit.com/' target='_blank')
+		base(target='_blank')
 		script document.documentElement.classList.add('js')
 		style: include index.css
 		//- link(
@@ -14,7 +16,7 @@ html(
 			href='https://www.reddit.com/r/all/.json?limit=50'
 			)
 	body
-		h1#title Is #[a(href='/u/GallowBoob') /u/GallowBoob] on the front page of reddit?
+		h1#title Is #[a(href='https://www.reddit.com/u/GallowBoob') /u/GallowBoob] on the front page of reddit?
 		.no-js
 			p You do not appear to have scripting enabled.
 			p Sadly, static pages will fail without scripting.
@@ -23,7 +25,9 @@ html(
 			dl#posts
 			h2#allusers
 			dl#users
+		include form
 		script: include index.js
 		footer
-			p ohai
+			p Fork me on GitHub: #[a(href='//github.com/ZaneHannanAU/is-gallowboob-frontpage')='Zane\xADHannan\xADAU / Is Gallow\xADBoob Front\xADpage?']
 			small=`\xA9 Copyright ${new Date().getFullYear()} `
+				a(href='https://www.reddit.com/u/ZaneHannanAU')

@@ -1,0 +1,91 @@
+$ease-out = cubic-bezier(0.4, 0.0, 0.2, 1.0)
+$line-height = 1.2
+$labelRem = 0.5
+$labelTag = ".input"
+zinput($height = 2rem, $scale = false, $icon = icons ? true : false)
+	if $scale
+		+ {selector($labelTag)}
+			max-width round(100% / $scale, 2)
+	if $icon
+		+ {selector($labelTag)}
+			&::after
+				if $scale
+					transform translate(0,$height - ($labelRem)) scale($scale)
+				else
+					transform translate(0,$height - ($labelRem))
+	&:not(:valid)
+		+ {selector($labelTag)}
+			if $scale
+				transform translate(0,round((($height/$scale) * $line-height) - $labelRem, 2)) scale($scale)
+			else
+				transform translate(0,$height - ($labelRem))
+				transition 180ms $ease-out
+			if $icon
+				&::after
+					if $scale
+						transform translate(-(round($scale * $height * $line-height, 2)),-($labelRem)rem)
+					else
+						transform translate(0,0)
+
+.input
+	transform-origin top start
+	// transform scale(0.5)
+	// font-size 2rem
+	pointer-events none
+	padding 0
+	color rgba($primary-text-color, $primary-text-color-dark ? 30% : 54%)
+	margin 0 0 -1px
+	text-align start
+	flex 1 1
+	transition 220ms $ease-out
+	if icons
+		&[i18n]
+			display flex
+			&::after
+				transform-origin bottom right
+				flex 1 1 auto
+				float right
+				text-align right
+				transition inherit
+
+label
+	display flex
+	flex-flow row wrap
+	padding .5ch
+
+input
+textarea
+	&:not(:valid)
+		&:focus
+			+ {selector($labelTag)}
+				color rgba($primary-text-color, $primary-text-color-dark ? 30% : 54%) !important
+	&:valid
+		&:focus
+			+ {selector($labelTag)}
+				color $accent-color !important
+
+
+input
+	sm-input(
+		$height: 2rem,
+		$fontsize: false,
+		$label-tag: selector($labelTag)
+		)
+	flex 1 1 100%
+	order 2
+	&[type='submit']
+	&[type='reset']
+		cursor pointer
+	&[type='submit']
+		sm-button(
+			$bgcolor: getBGColour(Buttons['Submit']),
+			$color: getTextColour(Buttons['Submit'])
+			)
+	// &[type='reset']
+	// 	sm-button(
+	// 		$bgcolor: getBGColour(Buttons['Reset']),
+	// 		$color: getTextColour(Buttons['Reset'])
+	// 		)
+	// &[type='range']
+	// 	cursor crosshair
+	zinput 2rem 1.2

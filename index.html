@@ -3,12 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <title>Is /u/GallowBoob on the front page of reddit?</title>
-    <base href="https://www.reddit.com/" target="_blank">
+    <base target="_blank">
     <script>document.documentElement.classList.add('js')</script>
     <style>:root,
+input,
+textarea,
 body {
   background: #263238;
   color: #fff;
+}
+form {
+  display: flex;
+  flex-flow: row wrap;
+}
+form .field {
+  flex: 1 1 20rem;
 }
 body {
   margin: 0;
@@ -137,7 +146,7 @@ body >*:not(footer) {
   flex: 1 1 auto;
   justify-content: center;
 }
-:empty {
+:empty:not(input) {
   display: none;
 }
 h1,
@@ -180,11 +189,133 @@ a {
   text-decoration: none;
   color: #ff6e40;
 }
+.input {
+  transform-origin: top left;
+  pointer-events: none;
+  padding: 0;
+  color: rgba(255,255,255,0.54);
+  margin: 0 0 -1px;
+  text-align: left;
+  flex: 1 1;
+  transition: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.input[i18n] {
+  display: flex;
+}
+.input[i18n]::after {
+  transform-origin: bottom right;
+  flex: 1 1 auto;
+  float: right;
+  text-align: right;
+  transition: inherit;
+}
+label {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0.5ch;
+}
+input:not(:valid):focus + .input,
+textarea:not(:valid):focus + .input {
+  color: rgba(255,255,255,0.54) !important;
+}
+input:valid:focus + .input,
+textarea:valid:focus + .input {
+  color: #ff6e40 !important;
+}
+input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  border-radius: 0;
+  outline: none;
+  height: 2rem;
+  width: 100%;
+  font-size: false;
+  margin: 0 0 15px 0;
+  padding: 0;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: all 0.3s;
+  margin-bottom: 0.5rem;
+  flex: 1 1 100%;
+  order: 2;
+}
+input:disabled,
+input[readonly="readonly"] {
+  color: rgba(0,0,0,0.26);
+  border-bottom: 1px dotted rgba(0,0,0,0.26);
+}
+input:focus:not([readonly]) {
+  border-bottom: 1px solid #ff6e40;
+  box-shadow: 0 1px 0 0 #ff6e40;
+}
+input:disabled + .input,
+input[readonly="readonly"] + .input {
+  color: rgba(0,0,0,0.26);
+}
+input:focus:not([readonly]) + .input {
+  color: #ff6e40;
+}
+input[type='submit'],
+input[type='reset'] {
+  cursor: pointer;
+}
+input[type='submit'] {
+  color: #fff;
+  background-color: #0091ea;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.16), 0 1px 9px 0 rgba(0,0,0,0.13);
+  border: none;
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 2rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  outline: 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: 0.2s ease-out;
+}
+input[type='submit']:hover {
+  background-color: #009af8;
+  box-shadow: 0 4.5px 9px 0 rgba(0,0,0,0.195), 0 5px 17px 0 rgba(0,0,0,0.145);
+}
+input[type='submit']:active {
+  background-color: #008ade;
+  box-shadow: 0 7px 12px 0 rgba(0,0,0,0.22), 0 9px 25px 0 rgba(0,0,0,0.16);
+}
+input[type='submit']:disabled {
+  background-color: #dfdfdf;
+  box-shadow: none;
+  color: #9f9f9f;
+  cursor: default;
+}
+input[type='submit']:disabled:hover {
+  background-color: #dfdfdf;
+  color: #9f9f9f;
+}
+input + .input {
+  max-width: 83.33%;
+}
+input + .input::after {
+  transform: translate(0, 1.5rem) scale(1.2);
+}
+input:not(:valid) + .input {
+  transform: translate(0, 1.5rem) scale(1.2);
+}
+input:not(:valid) + .input::after {
+  transform: translate(-2.88rem, -0.5rem);
+}
 
     </style>
   </head>
   <body>
-    <h1 id="title">Is <a href="/u/GallowBoob">/u/GallowBoob</a> on the front page of reddit?</h1>
+    <h1 id="title">Is <a href="https://www.reddit.com/u/GallowBoob">/u/GallowBoob</a> on the front page of reddit?</h1>
     <div class="no-js">
       <p>You do not appear to have scripting enabled.</p>
       <p>Sadly, static pages will fail without scripting.</p>
@@ -195,6 +326,30 @@ a {
       <h2 id="allusers"></h2>
       <dl id="users"></dl>
     </div>
+    <form method="GET" action="./" target="_self">
+      <div class="field">
+        <label>
+          <input type="number" aria-labelledby="_false" min="1" max="100" step="1" required name="limit">
+          <div class="input" id="_limit">Limit
+          </div>
+        </label>
+      </div>
+      <div class="field">
+        <label>
+          <input type="name" aria-labelledby="_false" required name="user">
+          <div class="input" id="_user">Username
+          </div>
+        </label>
+      </div>
+      <div class="field">
+        <label>
+          <input type="text" aria-labelledby="_false" required name="sr">
+          <div class="input" id="_sr">Subreddit
+          </div>
+        </label>
+      </div>
+      <input type="submit">
+    </form>
     <script>'use strict';
 
 var Options;
@@ -218,6 +373,9 @@ var qsa = function qsa(qa) {
 var ce = function ce(el) {
 	return document.createElement(el);
 };
+var cn = function cn(nd) {
+	return nd.cloneNode(true);
+};
 
 var posts = qs('#posts'),
     allusers = qs('#allusers'),
@@ -232,7 +390,8 @@ var posts = qs('#posts'),
     Ediv = ce('div'),
     Edt = ce('dt'),
     Edd = ce('dd'),
-    a,
+    un,
+    pt,
     li,
     div,
     dt,
@@ -240,29 +399,33 @@ var posts = qs('#posts'),
     loggable = [],
     allUsers = [];
 
-title.innerHTML = 'Is <a href="/u/' + user + '">/u/' + user + '</a> on the front page of ' + (sr === 'all' ? 'reddit' : '<a href="/r/' + sr + '">r/' + sr + '</a>') + '?';
+title.innerHTML = 'Is <a href="https://www.reddit.com/u/' + user + '">/u/' + user + '</a> on the front page of ' + (sr === 'all' ? 'reddit' : '<a href="https://www.reddit.com/r/' + sr + '">r/' + sr + '</a>') + '?';
 document.title = title.innerText;
 
+qs('form input[name="limit"]').value = limit;
+qs('form input[name="user"]').value = user;
+qs('form input[name="sr"]').value = sr;
+
 var addPost = function addPost(post, i, array, father) {
-	a = Ea.cloneNode(true);
-	dt = Edt.cloneNode(true);
-	dd = Edd.cloneNode(true);
-	div = Ediv.cloneNode(true);
+	un = cn(Ea); // username
+	pt = cn(Ea); // post title
+	dt = cn(Edt); // desc
+	dd = cn(Edd); // desc
+	div = cn(Ediv); // contain
 
 	div.dataset.score = post.data.score;
 	div.dataset.rank = 1 + i;
 	div.dataset.sr = post.data.subreddit;
 
-	a.href = '/u/' + post.data.author;
-	a.innerText = '/u/' + post.data.author;
-	dt.appendChild(a);
+	un.href = 'https://www.reddit.com/u/' + post.data.author;
+	un.innerText = '/u/' + post.data.author;
+	dt.appendChild(un);
 	div.appendChild(dt);
 
-	a = Ea.cloneNode(true);
-	a.href = post.data.permalink;
-	a.innerHTML = post.data.title;
-	dd.value = post.data.score;
-	dd.appendChild(a);
+	pt.href = 'https://www.reddit.com' + post.data.permalink;
+	pt.innerHTML = post.data.title;
+
+	dd.appendChild(pt);
 	div.appendChild(dd);
 	return father.appendChild(div);
 };
@@ -283,12 +446,12 @@ fetch('https://www.reddit.com/r/' + sr + '/.json?limit=' + limit).then(function 
 	loggable.forEach(function (post, i, posts) {
 		return addPost(post, i, posts, users);
 	});
-	allusers.innerHTML = 'The top ' + loggable.length + ' users on <a href="/r/' + sr + '">r/' + sr + '</a> in default sort:';
+	allusers.innerHTML = 'The top ' + loggable.length + ' users on <a href="https://www.reddit.com/r/' + sr + '">r/' + sr + '</a> in default sort:';
 });
 
     </script>
     <footer>
-      <p>ohai</p><small>© Copyright 2017 </small>
+      <p>Fork me on GitHub: <a href="//github.com/ZaneHannanAU/is-gallowboob-frontpage">Zane­Hannan­AU / Is Gallow­Boob Front­page?</a></p><small>© Copyright 2017 <a href="https://www.reddit.com/u/ZaneHannanAU"></a></small>
     </footer>
   </body>
 </html>

@@ -1,0 +1,50 @@
+mixin form__inputspan
+	if block
+		.input&attributes(attributes)
+			block
+
+mixin form__field
+	.field
+		block
+
+mixin input(vals)
+	unless attributes.id
+		+form__field
+			| An input was requested but nothing came
+	else
+		//- yay
+		-
+			vals.attrs = attributes
+			let iid = attributes.id
+			vals.attrs.name = iid
+			vals.attrs.id = false
+		case vals.type
+			default: +form__field
+					+input__default(vals)
+						+form__inputspan(
+							id='_'+iid
+							i18n=vals.emoji
+							)
+							block
+			when 'submit'
+				+input__submit(vals)
+
+mixin input__default(vals)
+	label
+		input(
+			type=vals.type
+			placeholder=vals.placeholder
+			aria-labelledby='_'+vals.attrs.id
+			)&attributes(vals.attrs)
+		block
+
+mixin input__submit(vals)
+	-
+		if (vals.emoji){
+			vals.valuei = vals.value + cust.i18nsp + vals.emoji
+		}
+	input(
+		type='submit'
+		value=vals.valuei||vals.value
+		aria-label=vals.value
+		)
