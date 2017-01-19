@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Is GallowBoob on the front page of reddit?</title>
+    <base href="https://www.reddit.com/">
+    <script>document.documentElement.classList.add('js')</script>
+    <style>.js:not(:root) {
+  display: none;
+}
+.js:root .js {
+  display: block;
+}
+.js:root .no-js {
+  display: none;
+}
+ol,
+h1 {
+  text-align: center;
+}
+dl {
+  columns: 99 20rem;
+}
+dl div {
+  -webkit-column-break-inside: avoid;
+  column-break-inside: avoid;
+}
+dl div::before {
+  display: block;
+  float: left;
+  content: attr(data-rank) ': ' attr(data-score);
+}
+dl div dt {
+  font-weight: bold;
+  text-align: right;
+}
+dl div dd {
+  text-align: justify;
+}
+
+    </style>
+  </head>
+  <body>
+    <h1>Is <a href="//www.reddit.com/u/GallowBoob">/u/GallowBoob</a> on the front page of reddit?</h1>
+    <div class="no-js">
+      <p>You do not appear to have scripting enabled.</p>
+      <p>Sadly, static pages will fail without scripting.</p>
+    </div>
+    <div class="js">
+      <div id="answer">Checking…</div>
+      <dl id="posts"></dl>
+      <h2 id="allusers"></h2>
+      <dl id="users"></dl>
+    </div>
+    <script>'use strict';
+
+var posts = document.querySelector('#posts'),
+    answer = document.querySelector('#answer'),
+    users = document.querySelector('#users'),
+    isFront = false,
+    Ea = document.createElement('a'),
+    Ediv = document.createElement('div'),
+    Edt = document.createElement('dt'),
+    Edd = document.createElement('dd'),
+    a,
+    li,
+    div,
+    dt,
+    dd,
+    loggable = [],
+    allUsers = [];
+
+var addPost = function addPost(post, i) {
+	a = Ea.cloneNode(true);
+	dd = Edd.cloneNode(true);
+	div = Ediv.cloneNode(true);
+
+	div.dataset.score = post.data.score;
+	div.dataset.rank = ++i;
+
+	a.href = post.data.permalink;
+	a.innerHTML = post.data.title;
+	dd.value = post.data.score;
+	dd.appendChild(a);
+	div.appendChild(dd);
+	return posts.appendChild(div);
+};
+var addUser = function addUser(post, i) {
+	a = Ea.cloneNode(true);
+	dt = Edt.cloneNode(true);
+	dd = Edd.cloneNode(true);
+	div = Ediv.cloneNode(true);
+
+	div.dataset.score = post.data.score;
+	div.dataset.rank = ++i;
+
+	a.href = '/u/' + post.data.author;
+	a.innerText = 'u/' + post.data.author;
+	dt.appendChild(a);
+	div.appendChild(dt);
+
+	a = Ea.cloneNode(true);
+	a.href = post.data.permalink;
+	a.innerHTML = post.data.title;
+	dd.appendChild(a);
+
+	div.appendChild(dd);
+	return users.appendChild(div);
+};
+
+fetch('https://www.reddit.com/r/all/.json?limit=50').then(function (res) {
+	return res.json();
+}).then(function (postList) {
+	return postList.data.children.forEach(function (post, i) {
+		loggable.push(post);
+		if (post.data.author === 'GallowBoob') {
+			addPost(post, i);
+			isFront = true;
+		}
+	});
+}).then(function () {
+	answer.innerText = isFront ? 'Yes:' : 'No.';
+	console.log(loggable);
+	loggable.forEach(addUser);
+	document.querySelector('#allusers').innerHTML = 'The top users on <a href="/r/all">r/all</a> in default sort:';
+});
+
+    </script>
+  </body>
+</html>
