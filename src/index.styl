@@ -1,0 +1,27 @@
+.js:not(:root)
+	display none
+
+.js:root
+	.js
+		display block
+	.no-js
+		display none
+
+ol
+h1
+	text-align center
+
+dl
+	columns 99 20rem
+	div
+		-webkit-column-break-inside avoid
+		column-break-inside @-webkit-column-break-inside
+		&::before
+			display block
+			float left
+			content attr(data-rank) ': ' attr(data-score)
+		dt
+			font-weight bold
+			text-align right
+		dd
+			text-align justify
