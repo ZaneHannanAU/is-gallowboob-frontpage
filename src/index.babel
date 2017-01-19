@@ -1,9 +1,12 @@
+var Options
 if (location.search.indexOf('?') === 0) {
 	var points = location.search.slice(1).toLocaleLowerCase().split('&')
 	points.forEach((s, i) => {
 		points[i] = s.split('=')
 	})
-	var Options = new Map(points)
+	Options = new Map(points)
+} else {
+	Options = new Map()
 }
 
 var posts = document.querySelector('#posts'),
