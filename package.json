@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm src/*.css src/*.js",
-    "start": "live-server ./ --no-browser --port=9090 --ignore node_modules --ignore src",
+    "start": "live-server --ignore=node_modules --ignore=src --no-browser --port=9090 --wait=100 ../is-gallowboob-frontpage",
     "make-windows": "make",
     "make": "./make"
   },
@@ -19,6 +19,7 @@
     "stylus": "^0.54.5"
   },
   "dependencies": {
+    "google-material-color": "^1.3.1",
     "stylus-material": "^1.4.3"
   }
 }

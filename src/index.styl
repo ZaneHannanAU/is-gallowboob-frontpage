@@ -1,3 +1,18 @@
+@require 'node_modules/google-material-color/dist/palette.styl'
+
+primary-colour = 'Blue Grey' '800'
+background-colour = 'Blue Grey' '900'
+accent-colour = 'Deep Orange' 'A200'
+
+@import 'mixins'
+@require 'stylus-material'
+
+sm-init(
+	false
+	)
+footer
+	sm-footer()
+
 .js:not(:root)
 	display none
 
@@ -7,28 +22,52 @@
 	.no-js
 		display none
 
+:root
+	min-height 100vh
+
+body
+	@extends :root
+	display flex
+	flex-flow column
+	justify-content center
+	>*:not(footer)
+		flex 1 1 auto
+		justify-content center
+
+:empty
+	display none
+
 h1
 h2
 	text-align center
 
 dl
 	columns 99 20rem
+	padding 1ch
 	div
 		-webkit-column-break-inside avoid
 		column-break-inside @-webkit-column-break-inside
 		&::before
 			display block
 			float right
-			content attr(data-score) ' (' attr(data-rank) ')'
+			content attr(data-score) ' (#' attr(data-rank) ')'
 		dt
 			font-weight bold
 			text-align left
-			margin 1ch 0
+			margin-before 1ch
+			-webkit-margin-before @margin-before
+			-moz-margin-before @margin-before
+			margin-after 1ch
+			-webkit-margin-after @margin-after
+			-moz-margin-after @margin-after
 		dd
 			text-align justify
+			margin-start 20px
+			-webkit-margin-start @margin-start
+			-moz-margin-start @margin-start
 			a
 				display block
 
 a
 	text-decoration none
-	color #22e
+	color $accent-color

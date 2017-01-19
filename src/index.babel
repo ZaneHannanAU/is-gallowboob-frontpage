@@ -1,6 +1,15 @@
+if (location.search.indexOf('?') === 0) {
+	var points = location.search.slice(1).toLocaleLowerCase().split('&')
+	points.forEach((s, i) => {
+		points[i] = s.split('=')
+	})
+	var Options = new Map(points)
+}
+
 var posts = document.querySelector('#posts'),
 	answer = document.querySelector('#answer'),
 	users = document.querySelector('#users'),
+	limit = Options.get('limit') || 50,
 	isFront = false,
 	Ea = document.createElement('a'),
 	Ediv = document.createElement('div'),
@@ -14,7 +23,7 @@ var addPost = (post, i) => {
 		div = Ediv.cloneNode(true)
 
 		div.dataset.score = post.data.score
-		div.dataset.rank = ++i
+		div.dataset.rank = 1+i
 
 		a.href = post.data.permalink
 		a.innerHTML = post.data.title
@@ -46,7 +55,7 @@ var addUser = (post, i) => {
 	return users.appendChild(div)
 }
 
-fetch('https://www.reddit.com/r/all/.json?limit=50')
+fetch(`https://www.reddit.com/r/all/.json?limit=${limit}`)
 	.then(res => res.json())
 	.then(postList => postList.data.children.forEach((post, i) => {
 		loggable.push(post)

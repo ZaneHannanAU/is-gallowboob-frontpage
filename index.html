@@ -1,11 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
     <title>Is GallowBoob on the front page of reddit?</title>
     <base href="https://www.reddit.com/" target="_blank">
     <script>document.documentElement.classList.add('js')</script>
-    <style>.js:not(:root) {
+    <style>:root,
+body {
+  background: #263238;
+  color: #fff;
+}
+body {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+html {
+  line-height: 1.5;
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+  color: #fff;
+}
+@media only screen and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  html {
+    font-size: 14.5px;
+  }
+}
+@media only screen and (min-width: 993px) {
+  html {
+    font-size: 15px;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  line-height: 1.1;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  font-weight: inherit;
+}
+h1 {
+  font-size: 3.4rem;
+  line-height: 110%;
+  margin: 1.7rem 0 1.36rem 0;
+}
+h2 {
+  font-size: 2.9rem;
+  line-height: 110%;
+  margin: 1.45rem 0 1.16rem 0;
+}
+h3 {
+  font-size: 2.4rem;
+  line-height: 110%;
+  margin: 1.2rem 0 0.96rem 0;
+}
+h4 {
+  font-size: 2rem;
+  line-height: 110%;
+  margin: 1rem 0 0.8rem 0;
+}
+h5 {
+  font-size: 1.5rem;
+  line-height: 110%;
+  margin: 0.75rem 0 0.6rem 0;
+}
+h6 {
+  font-size: 1rem;
+  line-height: 110%;
+  margin: 0.5rem 0 0.4rem 0;
+}
+footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  background-color: #37474f;
+  color: #fff;
+}
+footer > * {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  footer > * {
+    padding-left: 7.5%;
+    padding-right: 7.5%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  footer > * {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+footer small {
+  display: block;
+  overflow: hidden;
+  height: 50px;
+  line-height: 50px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 300;
+  background-color: rgba(51,51,51,0.2);
+}
+.js:not(:root) {
   display: none;
 }
 .js:root .js {
@@ -14,12 +124,29 @@
 .js:root .no-js {
   display: none;
 }
+:root,
+body {
+  min-height: 100vh;
+}
+body {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+body >*:not(footer) {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+:empty {
+  display: none;
+}
 h1,
 h2 {
   text-align: center;
 }
 dl {
   columns: 99 20rem;
+  padding: 1ch;
 }
 dl div {
   -webkit-column-break-inside: avoid;
@@ -28,22 +155,30 @@ dl div {
 dl div::before {
   display: block;
   float: right;
-  content: attr(data-score) ' (' attr(data-rank) ')';
+  content: attr(data-score) ' (#' attr(data-rank) ')';
 }
 dl div dt {
   font-weight: bold;
   text-align: left;
-  margin: 1ch 0;
+  margin-before: 1ch;
+  -webkit-margin-before: 1ch;
+  -moz-margin-before: 1ch;
+  margin-after: 1ch;
+  -webkit-margin-after: 1ch;
+  -moz-margin-after: 1ch;
 }
 dl div dd {
   text-align: justify;
+  margin-start: 20px;
+  -webkit-margin-start: 20px;
+  -moz-margin-start: 20px;
 }
 dl div dd a {
   display: block;
 }
 a {
   text-decoration: none;
-  color: #22e;
+  color: #ff6e40;
 }
 
     </style>
@@ -62,9 +197,18 @@ a {
     </div>
     <script>'use strict';
 
+if (location.search.indexOf('?') === 0) {
+	var points = location.search.slice(1).toLocaleLowerCase().split('&');
+	points.forEach(function (s, i) {
+		points[i] = s.split('=');
+	});
+	var Options = new Map(points);
+}
+
 var posts = document.querySelector('#posts'),
     answer = document.querySelector('#answer'),
     users = document.querySelector('#users'),
+    limit = Options.get('limit') || 50,
     isFront = false,
     Ea = document.createElement('a'),
     Ediv = document.createElement('div'),
@@ -84,7 +228,7 @@ var addPost = function addPost(post, i) {
 	div = Ediv.cloneNode(true);
 
 	div.dataset.score = post.data.score;
-	div.dataset.rank = ++i;
+	div.dataset.rank = 1 + i;
 
 	a.href = post.data.permalink;
 	a.innerHTML = post.data.title;
@@ -116,7 +260,7 @@ var addUser = function addUser(post, i) {
 	return users.appendChild(div);
 };
 
-fetch('https://www.reddit.com/r/all/.json?limit=50').then(function (res) {
+fetch('https://www.reddit.com/r/all/.json?limit=' + limit).then(function (res) {
 	return res.json();
 }).then(function (postList) {
 	return postList.data.children.forEach(function (post, i) {
@@ -134,5 +278,8 @@ fetch('https://www.reddit.com/r/all/.json?limit=50').then(function (res) {
 });
 
     </script>
+    <footer>
+      <p>ohai</p><small>© Copyright 2017 </small>
+    </footer>
   </body>
 </html>

@@ -1,0 +1,31 @@
+
+getBGColour(color = 'White', accent = '500')
+	if length(color) > 1
+		accent = color[1]
+		color = color[0]
+	return palette(color, accent)
+
+getTextColour(color = 'White', accent = '500', textAccent = 'Primary')
+	if length(color) > 1
+		accent = color[1]
+		if length(color) > 2
+			textAccent = color[2]
+		color = color[0]
+	return paletteText(color, accent, textAccent)
+
+optionColour(color = 'White', accent = '500', textAccent = 'Primary')
+	background getBGColour(color, accent)
+	color getTextColour(color, accent, textAccent)
+
+$primary-color = getBGColour(primary-colour)
+$primary-text-color = getTextColour(background-colour)
+
+$background-color = getBGColour(background-colour)
+$light-text-color = getTextColour(primary-colour)
+
+$accent-color = palette(accent-colour[0])
+if length(accent-colour) > 1
+	$accent-color = palette(accent-colour[0], accent-colour[1])
+
+:root
+	optionColour(background-colour)

@@ -1,5 +1,8 @@
 doctype html
-html
+html(
+	lang='en'
+	dir='ltr'
+	)
 	head
 		meta(charset='UTF-8')
 		title Is GallowBoob on the front page of reddit?
@@ -21,3 +24,6 @@ html
 			h2#allusers
 			dl#users
 		script: include index.js
+		footer
+			p ohai
+			small=`\xA9 Copyright ${new Date().getFullYear()} `
