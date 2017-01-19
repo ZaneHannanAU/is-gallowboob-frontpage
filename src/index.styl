@@ -58,11 +58,14 @@ dl
 		column-break-inside @-webkit-column-break-inside
 		&::before
 			display block
-			float right
+			float end
 			content attr(data-score) ' points on r/' attr(data-sr) ' (#' attr(data-rank) ')'
+			margin-start 1ch
+			-webkit-margin-start @margin-start
+			-moz-margin-start @margin-start
 		dt
 			font-weight bold
-			text-align left
+			text-align start
 			margin-before 1ch
 			-webkit-margin-before @margin-before
 			-moz-margin-before @margin-before
