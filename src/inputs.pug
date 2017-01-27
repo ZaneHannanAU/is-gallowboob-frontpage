@@ -15,8 +15,9 @@ mixin input(vals)
 		//- yay
 		-
 			vals.attrs = attributes
-			let iid = attributes.id
+			const iid = attributes.id
 			vals.attrs.name = iid
+			// attributes.id = false
 		case vals.type
 			default: +form__field
 					+input__default(vals)

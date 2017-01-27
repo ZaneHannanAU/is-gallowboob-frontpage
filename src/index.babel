@@ -1,14 +1,13 @@
-var Options
-if (location.search.indexOf('?') === 0) {
-	var points = decodeURIComponent(location.search.slice(1)).split('&')
-	points.forEach((s, i) => {
-		points[i] = s.split('=')
-		points[i][0] = points[i][0].toLocaleLowerCase()
-	})
-	Options = new Map(points)
-} else {
-	Options = new Map()
-}
+
+var OptionsIn = location.search || location.hash
+var OptionMap = decodeURIComponent(OptionsIn.slice(1)).split('&')
+
+OptionMap.forEach((s, i) => {
+	OptionMap[i] = s.split('=')
+	OptionMap[i][0] = OptionMap[i][0].toLocaleLowerCase()
+})
+
+const Options = new Map(OptionMap)
 
 const qs = q => document.querySelector(q)
 const qsa = qa => document.querySelectorAll(qa)
@@ -39,28 +38,28 @@ qs('#sr').value = sr
 
 
 var addPost = (post, i, array, father) => {
-		un = cn(Ea) // username
-		pt = cn(Ea) // post title
-		dt = cn(Edt) // desc
-		dd = cn(Edd) // desc
-		div = cn(Ediv) // contain
+	un = cn(Ea) // username
+	pt = cn(Ea) // post title
+	dt = cn(Edt) // desc
+	dd = cn(Edd) // desc
+	div = cn(Ediv) // contain
 
-		div.dataset.score = post.data.score
-		div.dataset.rank = 1+i
-		div.dataset.sr = post.data.subreddit
+	div.dataset.score = post.data.score
+	div.dataset.rank = 1+i
+	div.dataset.sr = post.data.subreddit
 
-		un.href = `https://www.reddit.com/u/${post.data.author}`
-		un.innerText = `/u/${post.data.author}`
-		dt.appendChild(un)
-		div.appendChild(dt)
+	un.href = `https://www.reddit.com/u/${post.data.author}`
+	un.innerText = `/u/${post.data.author}`
+	dt.appendChild(un)
+	div.appendChild(dt)
 
-		pt.href = `https://www.reddit.com${post.data.permalink}`
-		pt.innerHTML = post.data.title
+	pt.href = `https://www.reddit.com${post.data.permalink}`
+	pt.innerHTML = post.data.title
 
-		dd.appendChild(pt)
-		div.appendChild(dd)
-		return father.appendChild(div)
-	}
+	dd.appendChild(pt)
+	div.appendChild(dd)
+	return father.appendChild(div)
+}
 
 fetch(`https://www.reddit.com/r/${sr}/.json?limit=${limit}`)
 	.then(res => res.json())
@@ -75,5 +74,5 @@ fetch(`https://www.reddit.com/r/${sr}/.json?limit=${limit}`)
 		answer.innerText = isFront ? 'Yes:' : 'No.'
 		console.log(loggable)
 		loggable.forEach((post, i, posts) => addPost(post, i, posts, users))
-		allusers.innerHTML = `The top ${loggable.length} users on <a href="https://www.reddit.com/r/${sr}">r/${sr}</a> in default sort:`
+			allusers.innerHTML = `The top ${loggable.length} users on <a href="https://www.reddit.com/r/${sr}">r/${sr}</a> in default sort:`
 	})

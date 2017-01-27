@@ -334,21 +334,21 @@ input:not(:valid) + .input::after {
       <form method="GET" action="./" target="_self">
         <div class="field">
           <label>
-            <input type="number" aria-labelledby="_limit" min="1" max="100" step="1" required id="limit" name="limit">
+            <input type="number" aria-labelledby="_limit" min="1" max="100" step="1" required value="50" id="limit" name="limit">
             <div class="input" id="_limit">Limit
             </div>
           </label>
         </div>
         <div class="field">
           <label>
-            <input type="name" aria-labelledby="_user" required id="user" name="user">
+            <input type="name" aria-labelledby="_user" required value="GallowBoob" id="user" name="user">
             <div class="input" id="_user">Username
             </div>
           </label>
         </div>
         <div class="field">
           <label>
-            <input type="text" aria-labelledby="_sr" required id="sr" name="sr">
+            <input type="text" aria-labelledby="_sr" required value="all" id="sr" name="sr">
             <div class="input" id="_sr">Subreddit
             </div>
           </label>
@@ -371,17 +371,15 @@ input:not(:valid) + .input::after {
     </div>
     <script>'use strict';
 
-var Options;
-if (location.search.indexOf('?') === 0) {
-	var points = decodeURIComponent(location.search.slice(1)).split('&');
-	points.forEach(function (s, i) {
-		points[i] = s.split('=');
-		points[i][0] = points[i][0].toLocaleLowerCase();
-	});
-	Options = new Map(points);
-} else {
-	Options = new Map();
-}
+var OptionsIn = location.search || location.hash;
+var OptionMap = decodeURIComponent(OptionsIn.slice(1)).split('&');
+
+OptionMap.forEach(function (s, i) {
+	OptionMap[i] = s.split('=');
+	OptionMap[i][0] = OptionMap[i][0].toLocaleLowerCase();
+});
+
+var Options = new Map(OptionMap);
 
 var qs = function qs(q) {
 	return document.querySelector(q);
