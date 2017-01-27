@@ -464,6 +464,9 @@ fetch('https://www.reddit.com/r/' + sr + '/.json?limit=' + limit).then(function 
 		return addPost(post, i, posts, users);
 	});
 	allusers.innerHTML = 'The top ' + loggable.length + ' users on <a href="https://www.reddit.com/r/' + sr + '">r/' + sr + '</a> in default sort:';
+}).catch(function (e) {
+	console.error('Fetch error', e);
+	answer.innerHTML = 'Fetch error: <pre>' + e.toString() + '</pre>';
 });
 
     </script>

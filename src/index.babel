@@ -75,4 +75,7 @@ fetch(`https://www.reddit.com/r/${sr}/.json?limit=${limit}`)
 		console.log(loggable)
 		loggable.forEach((post, i, posts) => addPost(post, i, posts, users))
 			allusers.innerHTML = `The top ${loggable.length} users on <a href="https://www.reddit.com/r/${sr}">r/${sr}</a> in default sort:`
+	}).catch(e => {
+		console.error('Fetch error', e);
+		answer.innerHTML = `Fetch error: <pre>${e.toString()}</pre>`
 	})
